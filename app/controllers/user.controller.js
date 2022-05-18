@@ -1,6 +1,8 @@
 const db = require("../models");
-const {v4 : uuidv4} = require('uuid')
+const config = require("../config/auth.config");
+const {v4 : uuidv4} = require('uuid');
 const User = db.user;
+const verify = db.verification
 
   exports.allAccess = (req, res) => {
     res.status(200).send("Public Content.");
@@ -30,5 +32,20 @@ const User = db.user;
         return;
       }
     })
+  };
+  exports.pullverifyemail = (req, res) => {
+    current_time = new Date()
+    const verify_email = new verify({
+      user_id: req.userId,
+      verify_number: Math.floor(1000 + Math.random() * 9000),
+      expire_time: current_time + 7200
+    });
+    verify.save(err => {
+      if (err) {
+        res.status(500).send({ message: err });
+        return;
+      }
+      res.send({ message: "User was registered successfully!" });
+    });
   };
   

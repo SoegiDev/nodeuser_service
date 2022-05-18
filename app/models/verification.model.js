@@ -1,5 +1,5 @@
-const verification = require("mongoose");
-const verify = verification.model(
+const mongoose = require("mongoose");
+const verify = mongoose.model(
   "Verification",
   new mongoose.Schema({
     user_id: String,
