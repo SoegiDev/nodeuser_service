@@ -1,0 +1,10 @@
+### register
+POST http://127.0.0.1:8080/api/auth/signup
+Content-Type: application/json
+
+{
+    "username":"soegidev",
+    "email":"soegidev.id@gmail.com",
+    "password":"fajarsoegi",
+    "roles":["user","admin","moderator"]
+}
