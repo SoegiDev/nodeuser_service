@@ -35,17 +35,17 @@ const verify = db.verification
   };
   exports.pullverifyemail = (req, res) => {
     current_time = new Date()
-    const verify_email = new verify({
+    const setverify = new verify({
       user_id: req.userId,
       verify_number: Math.floor(1000 + Math.random() * 9000),
-      expire_time: current_time + 7200
+      expire_time: current_time.getTime() + 7200
     });
-    verify.save(err => {
+    setverify.save(err => {
       if (err) {
         res.status(500).send({ message: err });
         return;
       }
-      res.send({ message: "User was registered successfully!" });
+      res.send({ message: "Successfully Re Verify Email!" });
     });
   };
   

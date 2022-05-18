@@ -4,7 +4,7 @@ const verify = mongoose.model(
   new mongoose.Schema({
     user_id: String,
     verify_number: String,
-    expire_time: Date
+    expire_time: String
   },{
     timestamps: true
 })
