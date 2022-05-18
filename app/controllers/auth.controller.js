@@ -1,21 +1,16 @@
 const config = require("../config/auth.config");
-const { CreateUserUniqueID } = require("../helper/uniqueId");
+const { UniqueID,PublicID } = require("../helper/uniqueId");
 const db = require("../models");
 const User = db.user;
 const Role = db.role;
 var jwt = require("jsonwebtoken");
 var bcrypt = require("bcryptjs");
 exports.signup = (req, res) => {
-  var foo;
-  // User.findOne({}, function(err, result) {
-  //   if (err) throw err;
-  //   foo = result.public_id
-  //   User.db.close();
-  // });
-  // console.log(foo);
   const user = new User({
     username: req.body.username,
     email: req.body.email,
+    public_id: PublicID(),
+    unique_id: UniqueID(),
     password: bcrypt.hashSync(req.body.password, 8)
   });
   user.save((err, user) => {
