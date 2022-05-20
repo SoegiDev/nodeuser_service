@@ -3,7 +3,21 @@ const config = require("../config/auth.config");
 const {v4 : uuidv4} = require('uuid');
 const User = db.user;
 const verify = db.verification
+const redis = require('redis');
+const redisClient = redis.createClient({
+  host: '127.0.0.1',
+  port: 6379
+});
+(async () => {
+  redisClient.on('error', (err) => {
+    console.log('Redis Client Error', err);
+  });
+  redisClient.on('ready', () => console.log('Redis is ready'));
 
+  await redisClient.connect();
+
+  await redisClient.ping();
+})();
   exports.allAccess = (req, res) => {
     res.status(200).send("Public Content.");
   };
@@ -16,22 +30,38 @@ const verify = db.verification
   exports.moderatorBoard = (req, res) => {
     res.status(200).send("Moderator Content.");
   };
-  exports.profile = (req, res) => {
-    User.findOne({ id: req.userId }).exec((err, user) => {
-      if (err) {
-        res.status(500).send({ message: err });
-        return;
-      }
-      if (user) {
-        res.status(500).send({ 
-          id: user.id,
-          username: user.username,
-          email: user.email,
-          public_id: user.public_id 
-        });
-        return;
-      }
-    })
+  exports.profile = async (req, res) => {
+    key = 'profile:'+req.userId
+    let results = null;
+    const value = await redisClient.get(key);
+    if (value) {
+      res.status(200).send(JSON.parse(value));
+      console.log("ADa cache")
+    } else {
+      console.log("Tidak ada cache",value)
+      User.findOne({ id: req.userId }).exec((err, user) => {
+        if (err) {
+          res.status(500).send({ message: err });
+          return;
+        }
+        if (user) {
+          console.log("data",user)
+          res.status(500).send({ 
+            id: user.id,
+            username: user.username,
+            email: user.email,
+            public_id: user.public_id 
+          });
+          results
+          redisClient.setEx(key, 300, JSON.stringify({id: user.id,
+            username: user.username,
+            email: user.email,
+            public_id: user.public_id}));
+          return;
+        }
+      })
+    }
+    
   };
   exports.pullverifyemail = (req, res) => {
     current_time = new Date()
