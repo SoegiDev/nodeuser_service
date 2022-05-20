@@ -1,4 +1,4 @@
-const config = require("../config/auth.config");
+const {SECRET_KEY,SECRET_KEY_REFRESH,jwtExpiration,jwtRefreshExpiration,verifyExpiration} = require("../../config");
 const { UniqueID,PublicID } = require("../helper/uniqueId");
 const db = require("../models");
 const User = db.user;
@@ -80,18 +80,18 @@ exports.signin = (req, res) => {
           message: "Invalid Password!"
         });
       }
-      var token = jwt.sign({ id: user.id }, config.secret, {
-        expiresIn: config.jwtExpiration // 24 hours
+      var token = jwt.sign({ id: user.id }, SECRET_KEY, {
+        expiresIn: jwtExpiration // 24 hours
       });
-      var token_refresh = jwt.sign({ id: user.id }, config.secret_refresh, {
-        expiresIn: config.jwtRefreshExpiration // 24 hours
+      var token_refresh = jwt.sign({ id: user.id }, SECRET_KEY_REFRESH, {
+        expiresIn: jwtRefreshExpiration // 24 hours
       });
       var authorities = [];
       for (let i = 0; i < user.roles.length; i++) {
         authorities.push("ROLE_" + user.roles[i].name.toUpperCase());
       }
       res.status(200).send({
-        accessToken: token,
+        accessToken:token,
         refreshToken:token_refresh
       });
     });
