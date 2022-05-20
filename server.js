@@ -6,6 +6,7 @@ const app = express();
 var corsOptions = {
   origin: "*"
 };
+
 app.use(cors(corsOptions));
 
 // parse requests of content-type - application/json
@@ -13,6 +14,14 @@ app.use(express.json());
 
 // parse requests of content-type - application/x-www-form-urlencoded
 app.use(express.urlencoded({ extended: true }));
+
+if (process.env.NODE_ENV === "development") {
+  console.log(process.env.NODE_ENV)
+}
+
+if (process.env.NODE_ENV === "production") {
+  console.log(process.env.NODE_ENV)
+}
 
 const db = require("./app/models");
 const Role = db.role;

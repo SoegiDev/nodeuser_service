@@ -1,23 +1,23 @@
 const db = require("../models");
-const config = require("../config/auth.config");
 const {v4 : uuidv4} = require('uuid');
+const {redisClient} = require('../config/redis.config')
 const User = db.user;
 const verify = db.verification
-const redis = require('redis');
-const redisClient = redis.createClient({
-  host: '127.0.0.1',
-  port: 6379
-});
-(async () => {
-  redisClient.on('error', (err) => {
-    console.log('Redis Client Error', err);
-  });
-  redisClient.on('ready', () => console.log('Redis is ready'));
+// const redis = require('redis');
+// const redisClient = redis.createClient({
+//   host: '127.0.0.1',
+//   port: 6379
+// });
+// (async () => {
+//   redisClient.on('error', (err) => {
+//     console.log('Redis Client Error', err);
+//   });
+//   redisClient.on('ready', () => console.log('Redis is ready'));
 
-  await redisClient.connect();
+//   await redisClient.connect();
 
-  await redisClient.ping();
-})();
+//   await redisClient.ping();
+// })();
   exports.allAccess = (req, res) => {
     res.status(200).send("Public Content.");
   };
