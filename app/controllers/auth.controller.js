@@ -68,7 +68,8 @@ exports.signin = (req, res) => {
         return;
       }
       if (!user) {
-        return res.status(404).send({ message: "User Not found." });
+        return res.status(404).send({
+          message: "User Not Found!" });
       }
       var passwordIsValid = bcrypt.compareSync(
         req.body.password,
@@ -76,7 +77,6 @@ exports.signin = (req, res) => {
       );
       if (!passwordIsValid) {
         return res.status(401).send({
-          accessToken: null,
           message: "Invalid Password!"
         });
       }

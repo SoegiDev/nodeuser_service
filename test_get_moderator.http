@@ -1,9 +1,0 @@
-# GET /api/test/user HTTP/1.1
-# Host: 127.0.0.1:8080
-# x-access-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyNjI2NmJjMTM4YzU0OGJlYWNlZTFhZiIsImlhdCI6MTY1MDYxNjM4NSwiZXhwIjoxNjUwNzAyNzg1fQ.Le4KRtbHrvwf7tMs65R3gGrkuxPBUQUoBp2waW46Oko
-
-
-### register
-GET http://127.0.0.1:8080/api/test/mod HTTP/1.1
-Content-Type: application/json
-x-access-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyODQ2ZWMzZWUxZTlhMzlhNzJkMzQ2ZSIsImlhdCI6MTY1Mjg0NjUzMSwiZXhwIjoxNjUyODUwMTMxfQ.wE_PhCaVJ4PmjsbCL0w6knO4PZupoLjoxq6gxAH-KS4

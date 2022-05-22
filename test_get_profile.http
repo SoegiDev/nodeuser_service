@@ -1,4 +1,0 @@
-### GET PROFILE
-GET http://127.0.0.1:8080/api/test/profile HTTP/1.1
-Content-Type: application/json
-x-access-token:eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyODY2MTA5ZTZjMDBmMDYxY2RhYzFlMiIsImlhdCI6MTY1MzA1NzU4NiwiZXhwIjoxNjUzMDY0Nzg2fQ.RbNbW9GJhPqoNiuQdblJ7Z2Xb40gGyzenx_677_snyg

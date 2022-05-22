@@ -1,0 +1,42 @@
+version: "3.9"
+services:
+  mongodb:
+    container_name: mongodb
+    image: mongo:latest
+    networks:
+      - userservice
+    ports:
+      - 27017:27017
+    volumes:
+      - user_db:/data/db
+  dbredis:
+    container_name: dbredis
+    image: 'redis'
+    networks:
+      - userservice
+    ports:
+      - 6379:6379
+  userapp:
+    container_name: userapp
+    depends_on:
+      - mongodb
+      - dbredis
+    build: .
+    networks:
+      - userservice
+    env_file: ./.env
+    environment:
+      - REDIS_HOST=dbredis
+      - REDIS_PORT=6379
+      - MONGODB_HOST=mongodb
+      - MONGODB_PORT=27017
+      - MONGODB_NAME=user_service,
+      - NODE_ENV=development
+    ports:
+      - 8080:8080
+networks:
+  userservice:
+    name: userservice
+volumes:
+  user_db:
+    name: user_db

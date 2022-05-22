@@ -13,29 +13,19 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 const db = require("./app/models");
 const Role = db.role;
-db.mongoose
-  .connect(`mongodb://${dbConfig.HOST}:${dbConfig.PORT}/${dbConfig.DB}`, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-  })
-  .then(() => {
-    console.log("Successfully connect to MongoDB.");
-    initial();
-  })
-  .catch(err => {
-    console.error("Connection error", err);
-    process.exit();
-  });
-
-// simple route
-app.get("/", (req, res) => {
-  res.json({ message: "Welcome to bezkoder application." });
-});
-
+var mongoDB = `mongodb://${dbConfig.HOST}:${dbConfig.PORT}/${dbConfig.DB}`;
+db.mongoose.connect(mongoDB, {useNewUrlParser: true, useUnifiedTopology: true});
+var status_db = db.mongoose.connection.readyState
+if (status_db ==2){
+  initial();
+  console.log("Successfully connect to MongoDB.");
+}
 // routes
 require("./app/routes/auth.routes")(app);
 require("./app/routes/user.routes")(app);
-
+app.get("/", (req, res) => {
+  res.json({ message: "Welcome Xblocks Development." });
+});
 // set port, listen for requests
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {
