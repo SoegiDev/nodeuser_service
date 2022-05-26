@@ -1,6 +1,6 @@
 const {SECRET_KEY,SECRET_KEY_REFRESH,jwtExpiration,jwtRefreshExpiration,verifyExpiration} = require("../../config");
 const { UniqueID,PublicID } = require("../helper/uniqueId");
-const db = require("../models");
+const {db,response} = require("../models");
 const User = db.user;
 const Role = db.role;
 var jwt = require("jsonwebtoken");

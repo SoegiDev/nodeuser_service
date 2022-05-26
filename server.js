@@ -11,7 +11,7 @@ app.use(cors(corsOptions));
 app.use(express.json());
 // parse requests of content-type - application/x-www-form-urlencoded
 app.use(express.urlencoded({ extended: true }));
-const db = require("./app/models");
+const {db,response} = require("./app/models");
 const Role = db.role;
 var mongoDB = `mongodb://${dbConfig.HOST}:${dbConfig.PORT}/${dbConfig.DB}`;
 db.mongoose.connect(mongoDB, {useNewUrlParser: true, useUnifiedTopology: true});

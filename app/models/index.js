@@ -6,4 +6,5 @@ db.user = require("./user.model");
 db.role = require("./role.model");
 db.verification = require("./verification.model");
 db.ROLES = ["user", "admin", "moderator"];
-module.exports = db;
+response = require("./response");
+module.exports = {db,response};
